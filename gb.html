@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>WhatsApp Web GB Pro</title>
+  
+  <!-- Dynamic PWA Manifest Meta -->
+  <meta name="theme-color" content="#128C7E">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="WhatsApp GB">
+  <meta name="description" content="WhatsApp Web clone with GB privacy features, theme engine and mobile install support">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <!-- Google Font: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            wa: {
+              green: '#25D366',
+              teal: '#128C7E',
+              dark: '#075E54',
+              blue: '#34B7F1'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* CSS Root Theme Variables for Total Customization */
+    :root {
+      --app-bg: #eae6df;
+      --sidebar-bg: #ffffff;
+      --sidebar-header: #f0f2f5;
+      --chat-header: #f0f2f5;
+      --chat-bg: #efeae2;
+      --msg-incoming: #ffffff;
+      --msg-outgoing: #d9fdd3;
+      --text-primary: #111b21;
+      --text-secondary: #667781;
+      --border-color: #e9edef;
+      --accent: #00a884;
+      --accent-hover: #008f6f;
+      --bubble-radius: 10px;
+      --font-scale: 14px;
+      --deleted-badge: #ef4444;
+      --chat-pattern-opacity: 0.08;
+    }
+
+    [data-theme="classic-light"] {
+      --app-bg: #e1e9eb;
+      --sidebar-bg: #ffffff;
+      --sidebar-header: #f0f2f5;
+      --chat-header: #f0f2f5;
+      --chat-bg: #efeae2;
+      --msg-incoming: #ffffff;
+      --msg-outgoing: #d9fdd3;
+      --text-primary: #111b21;
+      --text-secondary: #667781;
+      --border-color: #e9edef;
+      --accent: #00a884;
+      --accent-hover: #008069;
+      --chat-pattern-opacity: 0.08;
+    }
+
+    [data-theme="dark"] {
+      --app-bg: #0c1317;
+      --sidebar-bg: #111b21;
+      --sidebar-header: #202c33;
+      --chat-header: #202c33;
+      --chat-bg: #0b141a;
+      --msg-incoming: #202c33;
+      --msg-outgoing: #005c4b;
+      --text-primary: #e9edef;
+      --text-secondary: #8696a0;
+      --border-color: #222e35;
+      --accent: #00a884;
+      --accent-hover: #00c99e;
+      --chat-pattern-opacity: 0.04;
+    }
+
+    [data-theme="midnight-amoled"] {
+      --app-bg: #000000;
+      --sidebar-bg: #000000;
+      --sidebar-header: #0a0a0a;
+      --chat-header: #0a0a0a;
+      --chat-bg: #000000;
+      --msg-incoming: #141414;
+      --msg-outgoing: #1b382b;
+      --text-primary: #ffffff;
+      --text-secondary: #999999;
+      --border-color: #1a1a1a;
+      --accent: #10b981;
+      --accent-hover: #34d399;
+      --chat-pattern-opacity: 0.02;
+    }
+
+    [data-theme="cyberpunk"] {
+      --app-bg: #0a051b;
+      --sidebar-bg: #130924;
+      --sidebar-header: #1f0e38;
+      --chat-header: #1f0e38;
+      --chat-bg: #0d061c;
+      --msg-incoming: #241342;
+      --msg-outgoing: #4c1d95;
+      --text-primary: #f5d0fe;
+      --text-secondary: #c084fc;
+      --border-color: #3b186b;
+      --accent: #f43f5e;
+      --accent-hover: #fb7185;
+      --chat-pattern-opacity: 0.06;
+    }
+
+    [data-theme="rose-gold"] {
+      --app-bg: #fdf2f8;
+      --sidebar-bg: #ffffff;
+      --sidebar-header: #fce7f3;
+      --chat-header: #fce7f3;
+      --chat-bg: #fdf4ff;
+      --msg-incoming: #ffffff;
+      --msg-outgoing: #fbcfe8;
+      --text-primary: #4a044e;
+      --text-secondary: #86198f;
+      --border-color: #f5d0fe;
+      --accent: #db2777;
+      --accent-hover: #be185d;
+      --chat-pattern-opacity: 0.06;
+    }
+
+    [data-theme="sunset-orange"] {
+      --app-bg: #1c140e;
+      --sidebar-bg: #261912;
+      --sidebar-header: #382317;
+      --chat-header: #382317;
+      --chat-bg: #18100a;
+      --msg-incoming: #332014;
+      --msg-outgoing: #7c2d12;
+      --text-primary: #ffedd5;
+      --text-secondary: #fdba74;
+      --border-color: #432818;
+      --accent: #f97316;
+      --accent-hover: #ea580c;
+      --chat-pattern-opacity: 0.05;
+    }
+
+    body {
+      background-color: var(--app-bg);
+      color: var(--text-primary);
+      font-size: var(--font-scale);
+      font-family: 'Inter', sans-serif;
+      overscroll-behavior-y: none;
+    }
+
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(134, 150, 160, 0.25);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(134, 150, 160, 0.45);
+    }
+
+    /* Doodled Chat Background Overlay */
+    .chat-wallpaper {
+      background-color: var(--chat-bg);
+      position: relative;
+    }
+    .chat-wallpaper::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: var(--chat-pattern-opacity);
+      pointer-events: none;
+      background-image: radial-gradient(var(--text-primary) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    .msg-bubble {
+      border-radius: var(--bubble-radius);
+    }
+  </style>
+</head>
+<body class="h-screen w-screen overflow-hidden select-none">
+
+  <!-- Mobile & Desktop Main Container Wrapper -->
+  <div class="h-full w-full flex justify-center items-center p-0 md:p-3 lg:p-4">
+    <div class="relative w-full h-full max-w-[1600px] flex overflow-hidden rounded-none md:rounded-2xl shadow-2xl border border-[var(--border-color)]">
+      
+      <!-- ================= SIDEBAR (CHATS, STATUS, SETTINGS) ================= -->
+      <section id="sidebarSection" class="w-full md:w-[400px] lg:w-[440px] flex-shrink-0 flex flex-col h-full bg-[var(--sidebar-bg)] border-r border-[var(--border-color)] z-20 transition-all duration-200">
+        
+        <!-- Sidebar Top Header -->
+        <header class="h-16 px-4 flex items-center justify-between bg-[var(--sidebar-header)] border-b border-[var(--border-color)]">
+          <div class="flex items-center gap-3">
+            <div class="relative cursor-pointer" onclick="openProfileModal()">
+              <img id="myAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=face" class="w-10 h-10 rounded-full object-cover border-2 border-[var(--accent)]" alt="My Profile">
+              <span id="myStatusIndicator" class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[var(--sidebar-header)]"></span>
+            </div>
+            <div>
+              <div class="flex items-center gap-1.5 font-bold text-sm text-[var(--text-primary)]">
+                <span>GB WhatsApp Web</span>
+                <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-[var(--accent)] text-white">PRO</span>
+              </div>
+              <div id="selfStatusText" class="text-xs text-[var(--text-secondary)]">Online (Ghost Off)</div>
+            </div>
+          </div>
+
+          <!-- Top Action Icons -->
+          <div class="flex items-center gap-1 text-[var(--text-secondary)]">
+            <!-- PWA Install / Mobile Download Trigger -->
+            <button id="pwaInstallBtn" onclick="triggerPwaInstall()" title="Install App to Mobile/Desktop" class="relative p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 text-[var(--accent)] font-semibold flex items-center gap-1 text-xs transition">
+              <i class="ph-bold ph-download-simple text-lg"></i>
+              <span class="hidden sm:inline">Install</span>
+              <span class="flex h-2 w-2 absolute top-1 right-1">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+            </button>
+
+            <!-- Status Stories Tab -->
+            <button onclick="openStatusModal()" title="Status Stories" class="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition">
+              <i class="ph-bold ph-circle-dashed text-xl"></i>
+            </button>
+
+            <!-- GB Mods Settings -->
+            <button onclick="openGbModal()" title="GB Privacy & Mod Settings" class="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 text-amber-500 transition">
+              <i class="ph-bold ph-shield-check text-xl"></i>
+            </button>
+
+            <!-- Themes & Customization -->
+            <button onclick="openThemeModal()" title="Theme & Color Customizer" class="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition">
+              <i class="ph-bold ph-paint-brush text-xl"></i>
+            </button>
+          </div>
+        </header>
+
+        <!-- Search Bar and GB Quick Alert -->
+        <div class="p-3 bg-[var(--sidebar-bg)] border-b border-[var(--border-color)]">
+          <div class="relative flex items-center bg-[var(--sidebar-header)] rounded-lg px-3 py-1.5 text-sm">
+            <i class="ph-bold ph-magnifying-glass text-[var(--text-secondary)] mr-2"></i>
+            <input id="searchInput" oninput="filterChats()" type="text" placeholder="Search or start new chat" class="w-full bg-transparent outline-none text-[var(--text-primary)] placeholder-[var(--text-secondary)] text-xs sm:text-sm">
+            <button id="clearSearchBtn" onclick="clearSearch()" class="hidden text-[var(--text-secondary)] hover:text-[var(--text-primary)]">
+              <i class="ph-bold ph-x"></i>
+            </button>
+          </div>
+
+          <!-- Active GB Badges Strip -->
+          <div id="gbStatusBadges" class="flex items-center gap-1.5 mt-2 overflow-x-auto text-[11px] pb-1 text-[var(--text-secondary)]">
+            <span class="flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 font-medium whitespace-nowrap">
+              <i class="ph-fill ph-check-circle"></i> Anti-Delete Active
+            </span>
+            <span id="ghostBadge" class="hidden items-center gap-1 px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 font-medium whitespace-nowrap">
+              <i class="ph-fill ph-ghost"></i> Ghost Mode
+            </span>
+            <span id="freezeBadge" class="hidden items-center gap-1 px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 font-medium whitespace-nowrap">
+              <i class="ph-fill ph-snowflake"></i> Frozen Time
+            </span>
+          </div>
+        </div>
+
+        <!-- Chat Conversations List -->
+        <div id="chatsContainer" class="flex-1 overflow-y-auto divide-y divide-[var(--border-color)]">
+          <!-- Populated by JavaScript -->
+        </div>
+
+      </section>
+
+      <!-- ================= CHAT MAIN WINDOW ================= -->
+      <main id="chatMainSection" class="hidden md:flex flex-1 flex-col h-full bg-[var(--chat-bg)] relative z-10 transition-all duration-200">
+        
+        <!-- Active Chat Header -->
+        <header id="chatHeader" class="h-16 px-4 flex items-center justify-between bg-[var(--chat-header)] border-b border-[var(--border-color)] z-10">
+          <div class="flex items-center gap-3">
+            <!-- Mobile Back Button -->
+            <button onclick="closeMobileChat()" class="md:hidden p-2 -ml-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 text-[var(--text-secondary)]">
+              <i class="ph-bold ph-arrow-left text-xl"></i>
+            </button>
+
+            <!-- Active User Avatar -->
+            <div class="relative cursor-pointer" onclick="showContactDetails()">
+              <img id="activeChatAvatar" src="" class="w-10 h-10 rounded-full object-cover" alt="Active Chat Avatar">
+              <span id="activeOnlineDot" class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[var(--chat-header)]"></span>
+            </div>
+
+            <!-- Active User Details -->
+            <div>
+              <div id="activeChatName" class="font-semibold text-sm sm:text-base text-[var(--text-primary)] flex items-center gap-1.5">
+                <!-- Contact Name -->
+              </div>
+              <div id="activeChatSubtitle" class="text-xs text-[var(--text-secondary)] flex items-center gap-1">
+                <!-- Online / Typing status -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Header Right Actions -->
+          <div class="flex items-center gap-2 text-[var(--text-secondary)]">
+            <!-- Simulated Incoming Message Trigger (For testing Anti-Delete & Auto-Replies) -->
+            <button onclick="triggerSimulatedSenderMessage()" title="Simulate Friend Sending Message" class="px-2.5 py-1 text-xs rounded-lg bg-[var(--accent)]/10 text-[var(--accent)] font-semibold hover:bg-[var(--accent)]/20 transition flex items-center gap-1">
+              <i class="ph-bold ph-paper-plane-tilt"></i>
+              <span class="hidden lg:inline">Simulate Reply</span>
+            </button>
+
+            <!-- Sender Deletes Last Msg (Anti-Delete Test) -->
+            <button onclick="triggerSenderDeleteLastMessage()" title="Sender 'Deletes For Everyone' Last Msg" class="px-2.5 py-1 text-xs rounded-lg bg-red-500/10 text-red-500 font-semibold hover:bg-red-500/20 transition flex items-center gap-1">
+              <i class="ph-bold ph-trash"></i>
+              <span class="hidden lg:inline">Test Anti-Delete</span>
+            </button>
+
+            <!-- Search in Chat -->
+            <button onclick="toggleInChatSearch()" class="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition">
+              <i class="ph-bold ph-magnifying-glass text-lg"></i>
+            </button>
+
+            <!-- Wallpaper / Fast Action -->
+            <button onclick="openThemeModal()" title="Wallpaper & Style" class="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition">
+              <i class="ph-bold ph-image text-lg"></i>
+            </button>
+          </div>
+        </header>
+
+        <!-- Chat Wallpaper and Messages Scroll Container -->
+        <div id="messagesArea" class="chat-wallpaper flex-1 overflow-y-auto p-4 sm:p-6 space-y-3 flex flex-col">
+          <!-- Dynamic Message Bubbles rendered here -->
+        </div>
+
+        <!-- In-Chat Search Bar Dropdown -->
+        <div id="inChatSearchBar" class="hidden absolute top-16 left-0 right-0 p-3 bg-[var(--chat-header)] border-b border-[var(--border-color)] flex items-center gap-2 z-20">
+          <input id="inChatSearchInput" oninput="searchWithinChat()" type="text" placeholder="Search in this conversation..." class="flex-1 bg-[var(--sidebar-bg)] rounded-lg px-3 py-1.5 text-xs sm:text-sm text-[var(--text-primary)] outline-none">
+          <span id="searchResultCount" class="text-xs text-[var(--text-secondary)]"></span>
+          <button onclick="toggleInChatSearch()" class="p-1 text-[var(--text-secondary)]"><i class="ph-bold ph-x"></i></button>
+        </div>
+
+        <!-- Typing & Message Compose Bar -->
+        <footer class="min-h-16 px-3 py-2 bg-[var(--chat-header)] border-t border-[var(--border-color)] flex items-center gap-2 z-10">
+          <!-- Emoji Picker Toggle -->
+          <button onclick="toggleEmojiTray()" class="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition">
+            <i class="ph-bold ph-smiley text-2xl"></i>
+          </button>
+
+          <!-- Attachment Mock Menu -->
+          <div class="relative">
+            <button onclick="toggleAttachmentMenu()" class="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition">
+              <i class="ph-bold ph-paperclip text-2xl"></i>
+            </button>
+            <div id="attachmentMenu" class="hidden absolute bottom-14 left-0 bg-[var(--sidebar-bg)] rounded-2xl p-3 shadow-2xl border border-[var(--border-color)] flex flex-col gap-2 w-48 text-xs font-semibold text-[var(--text-primary)] z-30">
+              <button onclick="sendMockImage(); toggleAttachmentMenu();" class="flex items-center gap-2 p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">
+                <i class="ph-fill ph-image text-purple-500 text-lg"></i> Photos & Videos
+              </button>
+              <button onclick="sendMockDocument(); toggleAttachmentMenu();" class="flex items-center gap-2 p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">
+                <i class="ph-fill ph-file-text text-blue-500 text-lg"></i> Document
+              </button>
+              <button onclick="sendMockVoice(); toggleAttachmentMenu();" class="flex items-center gap-2 p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">
+                <i class="ph-fill ph-microphone text-rose-500 text-lg"></i> Voice Note
+              </button>
+            </div>
+          </div>
+
+          <!-- Message Text Input Box -->
+          <div class="flex-1 bg-[var(--sidebar-bg)] rounded-xl px-4 py-2 flex items-center border border-[var(--border-color)]">
+            <input id="messageInput" onkeydown="handleInputKeyDown(event)" type="text" placeholder="Type a message (GB stealth typing)" class="w-full bg-transparent outline-none text-sm text-[var(--text-primary)] placeholder-[var(--text-secondary)]">
+          </div>
+
+          <!-- Send Message or Voice Note Mic -->
+          <button id="sendActionBtn" onclick="handleSendMessage()" class="w-11 h-11 rounded-full flex items-center justify-center bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white shadow-md transition transform active:scale-95">
+            <i id="sendActionIcon" class="ph-bold ph-paper-plane-right text-xl"></i>
+          </button>
+        </footer>
+
+        <!-- Emoji Quick Tray Selector -->
+        <div id="emojiTray" class="hidden bg-[var(--sidebar-bg)] border-t border-[var(--border-color)] p-3 grid grid-cols-8 sm:grid-cols-10 gap-2 max-h-48 overflow-y-auto text-xl text-center select-none">
+          <!-- Dynamic Emojis -->
+        </div>
+
+      </main>
+
+      <!-- Empty State View (When no chat selected on Desktop) -->
+      <section id="emptyChatPlaceholder" class="hidden md:flex flex-1 flex-col items-center justify-center bg-[var(--sidebar-header)] p-8 text-center border-l border-[var(--border-color)]">
+        <div class="w-48 h-48 rounded-full bg-[var(--accent)]/10 flex items-center justify-center mb-6">
+          <i class="ph-duotone ph-whatsapp-logo text-7xl text-[var(--accent)]"></i>
+        </div>
+        <h2 class="text-2xl font-bold text-[var(--text-primary)] mb-2">WhatsApp Web GB Pro</h2>
+        <p class="max-w-md text-sm text-[var(--text-secondary)] leading-relaxed mb-6">
+          Send and receive messages with custom theme styles, anti-delete message recovery, frozen last seen status, and mobile install capability.
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-3">
+          <button onclick="openGbModal()" class="px-4 py-2 rounded-xl bg-[var(--accent)] text-white text-xs font-semibold shadow hover:opacity-95 transition">
+            <i class="ph-bold ph-shield-check mr-1.5"></i> Configure GB Privacy
+          </button>
+          <button onclick="openThemeModal()" class="px-4 py-2 rounded-xl bg-[var(--sidebar-bg)] border border-[var(--border-color)] text-[var(--text-primary)] text-xs font-semibold shadow-sm hover:bg-black/5 transition">
+            <i class="ph-bold ph-paint-brush mr-1.5"></i> Custom Themes
+          </button>
+          <button onclick="triggerPwaInstall()" class="px-4 py-2 rounded-xl bg-emerald-600 text-white text-xs font-semibold shadow hover:bg-emerald-700 transition">
+            <i class="ph-bold ph-download-simple mr-1.5"></i> Install to Mobile / Chrome
+          </button>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- ================= MODALS & POPUPS ================= -->
+
+  <!-- 1. GB PRIVACY & MOD SETTINGS MODAL -->
+  <div id="gbModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[var(--sidebar-bg)] w-full max-w-lg rounded-2xl shadow-2xl border border-[var(--border-color)] overflow-hidden flex flex-col max-h-[90vh]">
+      <!-- Header -->
+      <div class="p-5 bg-[var(--sidebar-header)] border-b border-[var(--border-color)] flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center">
+            <i class="ph-fill ph-shield-check text-2xl"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-base text-[var(--text-primary)]">GB Privacy & Extra Features</h3>
+            <p class="text-xs text-[var(--text-secondary)]">Rule breaker privacy control center</p>
+          </div>
+        </div>
+        <button onclick="closeGbModal()" class="text-[var(--text-secondary)] hover:text-[var(--text-primary)] p-1 rounded-lg">
+          <i class="ph-bold ph-x text-xl"></i>
+        </button>
+      </div>
+
+      <!-- Settings List -->
+      <div class="p-5 overflow-y-auto space-y-4 text-sm divide-y divide-[var(--border-color)]">
+        
+        <!-- Anti-Delete Messages -->
+        <div class="pt-3 first:pt-0 flex items-center justify-between">
+          <div class="pr-4">
+            <div class="font-semibold text-[var(--text-primary)] flex items-center gap-1.5">
+              <span>Anti-Delete Messages</span>
+              <span class="text-[10px] bg-red-500/10 text-red-500 font-bold px-1.5 py-0.2 rounded">GB EXCLUSIVE</span>
+            </div>
+            <p class="text-xs text-[var(--text-secondary)]">When other people delete messages for everyone, you still see the text with a 🚫 badge.</p>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" id="gbAntiDeleteToggle" class="sr-only peer" checked onchange="toggleGbSetting('antiDelete', this.checked)">
+            <div class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--accent)]"></div>
+          </label>
+        </div>
+
+        <!-- Freeze Last Seen -->
+        <div class="pt-3 flex items-center justify-between">
+          <div class="pr-4">
+            <div class="font-semibold text-[var(--text-primary)]">Freeze Last Seen</div>
+            <p class="text-xs text-[var(--text-secondary)]">Freezes your time stamp permanently. Others never see you active currently.</p>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" id="gbFreezeLastSeenToggle" class="sr-only peer" onchange="toggleGbSetting('freezeLastSeen', this.checked)">
+            <div class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--accent)]"></div>
+          </label>
+        </div>
+
+        <!-- Ghost Mode / Hide Online -->
+        <div class="pt-3 flex items-center justify-between">
+          <div class="pr-4">
+            <div class="font-semibold text-[var(--text-primary)]">Ghost Mode (Hide Online)</div>
+            <p class="text-xs text-[var(--text-secondary)]">You browse chats freely while showing strictly 'Offline' to all contacts.</p>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" id="gbGhostModeToggle" class="sr-only peer" onchange="toggleGbSetting('ghostMode', this.checked)">
+            <div class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--accent)]"></div>
+          </label>
+        </div>
+
+        <!-- Hide Typing Indicator -->
+        <div class="pt-3 flex items-center justify-between">
+          <div class="pr-4">
+            <div class="font-semibold text-[var(--text-primary)]">Hide Typing Indicator</div>
+            <p class="text-xs text-[var(--text-secondary)]">Never show 'typing...' or 'recording audio...' while typing messages.</p>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" id="gbHideTypingToggle" class="sr-only peer" checked onchange="toggleGbSetting('hideTyping', this.checked)">
+            <div class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--accent)]"></div>
+          </label>
+        </div>
+
+        <!-- Blue Ticks on Reply Only -->
+        <div class="pt-3 flex items-center justify-between">
+          <div class="pr-4">
+            <div class="font-semibold text-[var(--text-primary)]">Show Blue Ticks Only After Reply</div>
+            <p class="text-xs text-[var(--text-secondary)]">Keep read ticks gray until you actually reply to that contact.</p>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" id="gbBlueTickReplyToggle" class="sr-only peer" checked onchange="toggleGbSetting('blueTickAfterReply', this.checked)">
+            <div class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--accent)]"></div>
+          </label>
+        </div>
+
+        <!-- Anti-Delete Status -->
+        <div class="pt-3 flex items-center justify-between">
+          <div class="pr-4">
+            <div class="font-semibold text-[var(--text-primary)]">Anti-Delete Status Stories</div>
+            <p class="text-xs text-[var(--text-secondary)]">Stories deleted by friends remain available for you for full 24 hours.</p>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" id="gbAntiDeleteStatusToggle" class="sr-only peer" checked onchange="toggleGbSetting('antiDeleteStatus', this.checked)">
+            <div class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--accent)]"></div>
+          </label>
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="p-4 bg-[var(--sidebar-header)] border-t border-[var(--border-color)] flex justify-end">
+        <button onclick="closeGbModal()" class="px-5 py-2 rounded-xl bg-[var(--accent)] text-white text-xs font-semibold hover:bg-[var(--accent-hover)] transition">
+          Done & Apply
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. THEMES & LOOK CUSTOMIZATION MODAL -->
+  <div id="themeModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[var(--sidebar-bg)] w-full max-w-lg rounded-2xl shadow-2xl border border-[var(--border-color)] overflow-hidden flex flex-col max-h-[90vh]">
+      <div class="p-5 bg-[var(--sidebar-header)] border-b border-[var(--border-color)] flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-[var(--accent)]/10 text-[var(--accent)] flex items-center justify-center">
+            <i class="ph-fill ph-palette text-2xl"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-base text-[var(--text-primary)]">Themes & Appearance</h3>
+            <p class="text-xs text-[var(--text-secondary)]">Total layout, font and color customization</p>
+          </div>
+        </div>
+        <button onclick="closeThemeModal()" class="text-[var(--text-secondary)] hover:text-[var(--text-primary)] p-1 rounded-lg">
+          <i class="ph-bold ph-x text-xl"></i>
+        </button>
+      </div>
+
+      <div class="p-5 overflow-y-auto space-y-6 text-sm">
+        <!-- Preset Theme Packs -->
+        <div>
+          <label class="block text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-2">Preset Themes</label>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+            <button onclick="applyPresetTheme('dark')" class="p-3 rounded-xl border border-[var(--border-color)] bg-[#111b21] text-emerald-400 font-medium text-xs flex flex-col items-center gap-1.5 hover:scale-102 transition">
+              <span class="w-6 h-6 rounded-full bg-[#005c4b] border border-emerald-400"></span>
+              Dark Classic
+            </button>
+            <button onclick="applyPresetTheme('classic-light')" class="p-3 rounded-xl border border-[var(--border-color)] bg-[#f0f2f5] text-gray-800 font-medium text-xs flex flex-col items-center gap-1.5 hover:scale-102 transition">
+              <span class="w-6 h-6 rounded-full bg-[#25D366] border border-gray-300"></span>
+              WhatsApp Light
+            </button>
+            <button onclick="applyPresetTheme('midnight-amoled')" class="p-3 rounded-xl border border-[var(--border-color)] bg-black text-white font-medium text-xs flex flex-col items-center gap-1.5 hover:scale-102 transition">
+              <span class="w-6 h-6 rounded-full bg-black border border-white"></span>
+              Midnight AMOLED
+            </button>
+            <button onclick="applyPresetTheme('cyberpunk')" class="p-3 rounded-xl border border-[var(--border-color)] bg-[#130924] text-pink-400 font-medium text-xs flex flex-col items-center gap-1.5 hover:scale-102 transition">
+              <span class="w-6 h-6 rounded-full bg-[#f43f5e] border border-purple-400"></span>
+              Cyberpunk Neon
+            </button>
+            <button onclick="applyPresetTheme('rose-gold')" class="p-3 rounded-xl border border-[var(--border-color)] bg-[#fdf2f8] text-pink-700 font-medium text-xs flex flex-col items-center gap-1.5 hover:scale-102 transition">
+              <span class="w-6 h-6 rounded-full bg-[#db2777]"></span>
+              Pastel Rose
+            </button>
+            <button onclick="applyPresetTheme('sunset-orange')" class="p-3 rounded-xl border border-[var(--border-color)] bg-[#261912] text-orange-400 font-medium text-xs flex flex-col items-center gap-1.5 hover:scale-102 transition">
+              <span class="w-6 h-6 rounded-full bg-[#f97316]"></span>
+              Sunset Amber
+            </button>
+          </div>
+        </div>
+
+        <!-- Custom Accent Color Picker -->
+        <div>
+          <label class="block text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-2">Custom Primary Accent Color</label>
+          <div class="flex items-center gap-3">
+            <input type="color" id="accentColorPicker" onchange="updateAccentColor(this.value)" class="w-10 h-10 rounded-lg cursor-pointer bg-transparent border-0">
+            <span id="accentHexCode" class="font-mono text-xs text-[var(--text-primary)]">#00a884</span>
+            <button onclick="resetAccentColor()" class="text-xs text-[var(--accent)] font-semibold hover:underline ml-auto">Reset Default</button>
+          </div>
+        </div>
+
+        <!-- Bubble Corner Radius -->
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <label class="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider">Chat Bubble Curvature</label>
+            <span id="radiusValDisplay" class="text-xs text-[var(--text-secondary)]">10px</span>
+          </div>
+          <input type="range" min="0" max="24" value="10" id="bubbleRadiusSlider" oninput="updateBubbleRadius(this.value)" class="w-full accent-[var(--accent)]">
+        </div>
+
+        <!-- Wallpaper Selection -->
+        <div>
+          <label class="block text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-2">Chat Wallpaper Pattern</label>
+          <div class="grid grid-cols-3 gap-2">
+            <button onclick="setWallpaperPattern('dots')" class="p-2 border border-[var(--border-color)] rounded-xl text-xs text-center font-medium hover:bg-black/5 dark:hover:bg-white/5">Dotted Grid</button>
+            <button onclick="setWallpaperPattern('solid')" class="p-2 border border-[var(--border-color)] rounded-xl text-xs text-center font-medium hover:bg-black/5 dark:hover:bg-white/5">Plain Solid</button>
+            <button onclick="setWallpaperPattern('gradient')" class="p-2 border border-[var(--border-color)] rounded-xl text-xs text-center font-medium hover:bg-black/5 dark:hover:bg-white/5">Soft Gradient</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="p-4 bg-[var(--sidebar-header)] border-t border-[var(--border-color)] flex justify-end">
+        <button onclick="closeThemeModal()" class="px-5 py-2 rounded-xl bg-[var(--accent)] text-white text-xs font-semibold hover:bg-[var(--accent-hover)] transition">
+          Apply & Save
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. STATUS STORIES MODAL (WITH ANTI-DELETE STATUS SIMULATION) -->
+  <div id="statusModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-[var(--sidebar-bg)] w-full max-w-md rounded-2xl shadow-2xl border border-[var(--border-color)] overflow-hidden flex flex-col h-[650px] max-h-[90vh]">
+      <!-- Status Header -->
+      <div class="p-4 bg-[var(--sidebar-header)] border-b border-[var(--border-color)] flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i class="ph-fill ph-circle-dashed text-2xl text-[var(--accent)]"></i>
+          <h3 class="font-bold text-base text-[var(--text-primary)]">Status Stories</h3>
+        </div>
+        <button onclick="closeStatusModal()" class="text-[var(--text-secondary)] hover:text-[var(--text-primary)] p-1 rounded-lg">
+          <i class="ph-bold ph-x text-xl"></i>
+        </button>
+      </div>
+
+      <!-- Stories Container -->
+      <div id="statusStoriesList" class="flex-1 overflow-y-auto p-4 space-y-3">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Add New Status Simulator -->
+      <div class="p-4 bg-[var(--sidebar-header)] border-t border-[var(--border-color)] flex items-center gap-2">
+        <input id="myNewStatusInput" type="text" placeholder="Share a text status story..." class="flex-1 bg-[var(--sidebar-bg)] border border-[var(--border-color)] rounded-xl px-3 py-2 text-xs text-[var(--text-primary)] outline-none">
+        <button onclick="postNewStatus()" class="px-4 py-2 rounded-xl bg-[var(--accent)] text-white text-xs font-semibold hover:bg-[var(--accent-hover)] transition">
+          Post
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. PWA INSTALL TO MOBILE GUIDE MODAL -->
+  <div id="installGuideModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[var(--sidebar-bg)] w-full max-w-md rounded-2xl shadow-2xl border border-[var(--border-color)] p-6 flex flex-col text-center">
+      <div class="w-16 h-16 rounded-2xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center mx-auto mb-4">
+        <i class="ph-fill ph-device-mobile text-4xl"></i>
+      </div>
+      <h3 class="text-lg font-bold text-[var(--text-primary)] mb-2">Install to Mobile Phone / Chrome</h3>
+      <p class="text-xs text-[var(--text-secondary)] mb-4 leading-relaxed">
+        You can download this Web App directly to your Android or iPhone home screen without needing Google Play Store!
+      </p>
+
+      <div class="bg-[var(--sidebar-header)] rounded-xl p-4 text-left space-y-3 mb-6 text-xs text-[var(--text-primary)] border border-[var(--border-color)]">
+        <div class="flex items-start gap-2.5">
+          <span class="w-5 h-5 rounded-full bg-[var(--accent)] text-white flex items-center justify-center text-[10px] font-bold flex-shrink-0">1</span>
+          <div>Open this URL in <strong>Google Chrome</strong> on your Mobile device.</div>
+        </div>
+        <div class="flex items-start gap-2.5">
+          <span class="w-5 h-5 rounded-full bg-[var(--accent)] text-white flex items-center justify-center text-[10px] font-bold flex-shrink-0">2</span>
+          <div>Tap the <strong>3 vertical dots (Menu)</strong> at top right corner of Chrome.</div>
+        </div>
+        <div class="flex items-start gap-2.5">
+          <span class="w-5 h-5 rounded-full bg-[var(--accent)] text-white flex items-center justify-center text-[10px] font-bold flex-shrink-0">3</span>
+          <div>Tap <strong>"Add to Home Screen"</strong> or <strong>"Install App"</strong>.</div>
+        </div>
+      </div>
+
+      <div class="flex gap-2">
+        <button id="directPromptInstallBtn" onclick="executeNativeInstallPrompt()" class="flex-1 py-2.5 rounded-xl bg-[var(--accent)] text-white text-xs font-semibold hover:bg-[var(--accent-hover)] transition flex items-center justify-center gap-1.5">
+          <i class="ph-bold ph-download-simple"></i> Try Direct Install Prompt
+        </button>
+        <button onclick="closeInstallGuide()" class="px-4 py-2.5 rounded-xl border border-[var(--border-color)] text-[var(--text-secondary)] text-xs font-medium hover:bg-black/5">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT APPLICATION LOGIC -->
+  <script>
+    // ==========================================
+    // 1. PWA REGISTRATION & WEB MANIFEST SETUP
+    // ==========================================
+    let deferredPrompt = null;
+
+    function setupPwaManifest() {
+      // Dynamic Web App Manifest Injection via Blob URL
+      const manifestObject = {
+        name: "WhatsApp Web GB Pro",
+        short_name: "WhatsApp GB",
+        start_url: window.location.href,
+        display: "standalone",
+        background_color: "#111b21",
+        theme_color: "#128C7E",
+        description: "WhatsApp Web GB Pro with Anti-Delete, custom themes and freeze status",
+        icons: [
+          {
+            src: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/192px-WhatsApp.svg.png",
+            sizes: "192x192",
+            type: "image/png"
+          },
+          {
+            src: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/512px-WhatsApp.svg.png",
+            sizes: "512x512",
+            type: "image/png"
+          }
+        ]
+      };
+
+      const manifestBlob = new Blob([JSON.stringify(manifestObject)], { type: 'application/json' });
+      const manifestURL = URL.createObjectURL(manifestBlob);
+      const manifestLink = document.createElement('link');
+      manifestLink.rel = 'manifest';
+      manifestLink.href = manifestURL;
+      document.head.appendChild(manifestLink);
+
+      // Register Inline Service Worker for Offline PWA Capabilities
+      if ('serviceWorker' in navigator) {
+        const swScript = `
+          self.addEventListener('install', (e) => self.skipWaiting());
+          self.addEventListener('activate', (e) => clients.claim());
+          self.addEventListener('fetch', (e) => e.respondWith(fetch(e.request).catch(() => caches.match(e.request))));
+        `;
+        const swBlob = new Blob([swScript], { type: 'text/javascript' });
+        const swUrl = URL.createObjectURL(swBlob);
+        navigator.serviceWorker.register(swUrl).catch(err => console.log('SW registration note:', err));
+      }
+    }
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      const installBtn = document.getElementById('pwaInstallBtn');
+      if (installBtn) installBtn.classList.remove('hidden');
+    });
+
+    function triggerPwaInstall() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('User accepted the PWA install prompt');
+          }
+          deferredPrompt = null;
+        });
+      } else {
+        // Show manual instruction modal for Chrome Mobile
+        document.getElementById('installGuideModal').classList.remove('hidden');
+      }
+    }
+
+    function executeNativeInstallPrompt() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+      } else {
+        alert("To install on Chrome: Tap the top-right 3-dots menu in Chrome and select 'Add to Home Screen'!");
+      }
+      closeInstallGuide();
+    }
+
+    function closeInstallGuide() {
+      document.getElementById('installGuideModal').classList.add('hidden');
+    }
+
+    // ==========================================
+    // 2. DATA STORE & STATE INITIALIZATION
+    // ==========================================
+    const DEFAULT_CONTACTS = [
+      {
+        id: 'contact_1',
+        name: 'Sameer Khan',
+        avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop&crop=face',
+        online: true,
+        lastSeen: 'online',
+        about: 'Coding late night 💻🚀',
+        unread: 1,
+        typing: false
+      },
+      {
+        id: 'contact_2',
+        name: 'Pooja Sharma',
+        avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face',
+        online: false,
+        lastSeen: 'Today at 9:45 PM',
+        about: 'Living my best life ✨',
+        unread: 0,
+        typing: false
+      },
+      {
+        id: 'contact_3',
+        name: 'Dev Tech Group',
+        avatar: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=100&h=100&fit=crop',
+        online: true,
+        lastSeen: 'Rahul, Amit, You',
+        about: 'Group for FullStack developers',
+        unread: 3,
+        typing: false,
+        isGroup: true
+      },
+      {
+        id: 'contact_4',
+        name: 'Aman Verma',
+        avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100&h=100&fit=crop&crop=face',
+        online: false,
+        lastSeen: 'Yesterday',
+        about: 'Available on calls only 📞',
+        unread: 0,
+        typing: false
+      }
+    ];
+
+    const DEFAULT_MESSAGES = {
+      'contact_1': [
+        { id: 'm1', sender: 'contact_1', text: 'Hey bro, did you check the new GB WhatsApp Web app?', time: '9:15 PM', status: 'read', isDeleted: false },
+        { id: 'm2', sender: 'me', text: 'Yes! It has custom themes, anti-delete, and works on Chrome mobile too.', time: '9:16 PM', status: 'read', isDeleted: false },
+        { id: 'm3', sender: 'contact_1', text: 'Wait let me send a secret password then delete it.', time: '9:17 PM', status: 'read', isDeleted: false },
+        { id: 'm4', sender: 'contact_1', text: 'Secret code: #Alpha99GB (Deleted by sender)', time: '9:18 PM', status: 'read', isDeleted: true, deletedBy: 'Sameer Khan' },
+        { id: 'm5', sender: 'contact_1', text: 'Did you still see that message? Anti-delete works! 🔥', time: '9:19 PM', status: 'read', isDeleted: false }
+      ],
+      'contact_2': [
+        { id: 'm6', sender: 'contact_2', text: 'Hi! Are we still meeting for coffee tomorrow?', time: '8:30 PM', status: 'read', isDeleted: false },
+        { id: 'm7', sender: 'me', text: 'Yes, 5:00 PM at Starbucks works best for me.', time: '8:42 PM', status: 'delivered', isDeleted: false }
+      ],
+      'contact_3': [
+        { id: 'm8', sender: 'contact_3', text: 'Amit: New build deployed on production!', time: '6:12 PM', status: 'read', isDeleted: false },
+        { id: 'm9', sender: 'contact_3', text: 'Rahul: Checking now.', time: '6:14 PM', status: 'read', isDeleted: false }
+      ],
+      'contact_4': [
+        { id: 'm10', sender: 'contact_4', text: 'Please send that PDF when you get time.', time: 'Yesterday', status: 'read', isDeleted: false }
+      ]
+    };
+
+    const STATUS_STORIES = [
+      {
+        id: 's1',
+        userName: 'Pooja Sharma',
+        avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face',
+        time: '32 minutes ago',
+        text: 'Enjoying the evening sunset by the beach 🌅🌊',
+        isDeleted: false
+      },
+      {
+        id: 's2',
+        userName: 'Sameer Khan',
+        avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop&crop=face',
+        time: '2 hours ago (Anti-Deleted)',
+        text: 'This status was deleted by Sameer after 5 mins! But saved by GB Anti-Delete 🛡️',
+        isDeleted: true
+      }
+    ];
+
+    // GB Privacy Configurations
+    let gbSettings = {
+      antiDelete: true,
+      freezeLastSeen: false,
+      frozenTime: 'Yesterday at 11:11 PM',
+      ghostMode: false,
+      hideTyping: true,
+      blueTickAfterReply: true,
+      antiDeleteStatus: true
+    };
+
+    // Load from LocalStorage
+    let contacts = JSON.parse(localStorage.getItem('wa_gb_contacts')) || DEFAULT_CONTACTS;
+    let messages = JSON.parse(localStorage.getItem('wa_gb_messages')) || DEFAULT_MESSAGES;
+    let savedGbSettings = localStorage.getItem('wa_gb_settings');
+    if (savedGbSettings) {
+      gbSettings = { ...gbSettings, ...JSON.parse(savedGbSettings) };
+    }
+
+    let activeChatId = 'contact_1';
+    let currentTheme = localStorage.getItem('wa_gb_theme') || 'dark';
+
+    // ==========================================
+    // 3. UI RENDERING ENGINES
+    // ==========================================
+
+    function saveState() {
+      localStorage.setItem('wa_gb_contacts', JSON.stringify(contacts));
+      localStorage.setItem('wa_gb_messages', JSON.stringify(messages));
+      localStorage.setItem('wa_gb_settings', JSON.stringify(gbSettings));
+      localStorage.setItem('wa_gb_theme', currentTheme);
+    }
+
+    function renderChatsList(filterQuery = '') {
+      const container = document.getElementById('chatsContainer');
+      container.innerHTML = '';
+
+      const filtered = contacts.filter(c => c.name.toLowerCase().includes(filterQuery.toLowerCase()));
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="p-8 text-center text-xs text-[var(--text-secondary)]">
+            No conversations found for "${filterQuery}"
+          </div>`;
+        return;
+      }
+
+      filtered.forEach(contact => {
+        const chatMsgs = messages[contact.id] || [];
+        const lastMsg = chatMsgs[chatMsgs.length - 1];
+        const isActive = contact.id === activeChatId;
+
+        const chatEl = document.createElement('div');
+        chatEl.className = `flex items-center gap-3 px-4 py-3 cursor-pointer transition ${
+          isActive ? 'bg-[var(--sidebar-header)]' : 'hover:bg-black/5 dark:hover:bg-white/5'
+        }`;
+        chatEl.onclick = () => selectChat(contact.id);
+
+        let previewText = lastMsg ? (lastMsg.isDeleted ? '🚫 Deleted message' : lastMsg.text) : 'Tap to start conversation';
+        let statusTicks = '';
+        if (lastMsg && lastMsg.sender === 'me') {
+          if (lastMsg.status === 'read') {
+            statusTicks = '<i class="ph-bold ph-checks text-[var(--accent)] text-sm mr-1"></i>';
+          } else if (lastMsg.status === 'delivered') {
+            statusTicks = '<i class="ph-bold ph-checks text-[var(--text-secondary)] text-sm mr-1"></i>';
+          } else {
+            statusTicks = '<i class="ph-bold ph-check text-[var(--text-secondary)] text-sm mr-1"></i>';
+          }
+        }
+
+        chatEl.innerHTML = `
+          <div class="relative flex-shrink-0">
+            <img src="${contact.avatar}" class="w-12 h-12 rounded-full object-cover" alt="${contact.name}">
+            ${contact.online && !gbSettings.ghostMode ? '<span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[var(--sidebar-bg)]"></span>' : ''}
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center justify-between mb-0.5">
+              <h4 class="font-semibold text-sm text-[var(--text-primary)] truncate">${contact.name}</h4>
+              <span class="text-[11px] text-[var(--text-secondary)] flex-shrink-0">${lastMsg ? lastMsg.time : ''}</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <p class="text-xs text-[var(--text-secondary)] truncate flex items-center">
+                ${statusTicks}
+                <span class="${lastMsg && lastMsg.isDeleted ? 'italic text-red-400 font-medium' : ''}">${previewText}</span>
+              </p>
+              ${contact.unread > 0 ? `
+                <span class="ml-2 flex-shrink-0 w-5 h-5 rounded-full bg-[var(--accent)] text-white text-[10px] font-bold flex items-center justify-center">
+                  ${contact.unread}
+                </span>` : ''}
+            </div>
+          </div>
+        `;
+        container.appendChild(chatEl);
+      });
+    }
+
+    function selectChat(contactId) {
+      activeChatId = contactId;
+      const contact = contacts.find(c => c.id === contactId);
+      if (!contact) return;
+
+      // Mark unread as zero
+      contact.unread = 0;
+      saveState();
+
+      // Adjust mobile responsiveness
+      const sidebar = document.getElementById('sidebarSection');
+      const chatMain = document.getElementById('chatMainSection');
+      const placeholder = document.getElementById('emptyChatPlaceholder');
+
+      if (window.innerWidth < 768) {
+        sidebar.classList.add('hidden');
+        chatMain.classList.remove('hidden');
+      } else {
+        sidebar.classList.remove('hidden');
+        chatMain.classList.remove('hidden');
+        placeholder.classList.add('hidden');
+      }
+
+      // Populate Header
+      document.getElementById('activeChatAvatar').src = contact.avatar;
+      document.getElementById('activeChatName').innerHTML = `
+        ${contact.name}
+        ${contact.isGroup ? '<span class="text-[10px] bg-sky-500/10 text-sky-400 px-1.5 py-0.5 rounded font-semibold">Group</span>' : ''}
+      `;
+
+      updateActiveContactSubtitle(contact);
+      renderMessages();
+      renderChatsList();
+    }
+
+    function updateActiveContactSubtitle(contact) {
+      const sub = document.getElementById('activeChatSubtitle');
+      const dot = document.getElementById('activeOnlineDot');
+
+      if (contact.typing) {
+        sub.innerHTML = '<span class="text-emerald-500 font-semibold animate-pulse">typing...</span>';
+        dot.classList.remove('hidden');
+      } else if (contact.online) {
+        sub.innerHTML = '<span class="text-emerald-500 font-medium">online</span>';
+        dot.classList.remove('hidden');
+      } else {
+        sub.innerHTML = `<span>last seen ${contact.lastSeen}</span>`;
+        dot.classList.add('hidden');
+      }
+    }
+
+    function closeMobileChat() {
+      const sidebar = document.getElementById('sidebarSection');
+      const chatMain = document.getElementById('chatMainSection');
+      sidebar.classList.remove('hidden');
+      chatMain.classList.add('hidden');
+    }
+
+    function renderMessages() {
+      const area = document.getElementById('messagesArea');
+      area.innerHTML = '';
+      const chatMsgs = messages[activeChatId] || [];
+
+      if (chatMsgs.length === 0) {
+        area.innerHTML = `
+          <div class="m-auto text-center p-6 rounded-2xl bg-[var(--sidebar-header)]/80 backdrop-blur-sm max-w-sm">
+            <i class="ph-duotone ph-lock-key text-3xl text-[var(--accent)] mb-2"></i>
+            <p class="text-xs text-[var(--text-secondary)]">Messages are protected with end-to-end simulation. Your custom GB theme is active.</p>
+          </div>
+        `;
+        return;
+      }
+
+      chatMsgs.forEach((msg, idx) => {
+        const isMe = msg.sender === 'me';
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `flex w-full ${isMe ? 'justify-end' : 'justify-start'} group`;
+
+        let bubbleContent = '';
+
+        // Anti-delete message detection
+        if (msg.isDeleted) {
+          if (gbSettings.antiDelete) {
+            bubbleContent = `
+              <div class="flex items-center gap-1.5 mb-1 text-[11px] font-bold text-red-500 bg-red-500/10 px-2 py-0.5 rounded">
+                <i class="ph-bold ph-prohibit"></i>
+                <span>This message was deleted by sender (Recovered by GB)</span>
+              </div>
+              <div class="text-sm text-[var(--text-primary)] opacity-90">${escapeHtml(msg.text)}</div>
+            `;
+          } else {
+            bubbleContent = `
+              <div class="italic text-xs text-[var(--text-secondary)] flex items-center gap-1">
+                <i class="ph-bold ph-prohibit"></i> This message was deleted
+              </div>
+            `;
+          }
+        } else {
+          bubbleContent = `<div class="text-sm text-[var(--text-primary)] leading-relaxed select-text">${escapeHtml(msg.text)}</div>`;
+        }
+
+        // Tick marks logic
+        let ticksHtml = '';
+        if (isMe) {
+          if (msg.status === 'read') {
+            ticksHtml = '<i class="ph-bold ph-checks text-[var(--accent)] text-sm ml-1"></i>';
+          } else if (msg.status === 'delivered') {
+            ticksHtml = '<i class="ph-bold ph-checks text-[var(--text-secondary)] text-sm ml-1"></i>';
+          } else {
+            ticksHtml = '<i class="ph-bold ph-check text-[var(--text-secondary)] text-sm ml-1"></i>';
+          }
+        }
+
+        msgDiv.innerHTML = `
+          <div class="msg-bubble relative max-w-[85%] sm:max-w-[70%] p-3 shadow-sm border border-[var(--border-color)]/30 ${
+            isMe ? 'bg-[var(--msg-outgoing)]' : 'bg-[var(--msg-incoming)]'
+          }">
+            ${bubbleContent}
+            <div class="flex items-center justify-end gap-1 mt-1 text-[10px] text-[var(--text-secondary)]">
+              <span>${msg.time}</span>
+              ${ticksHtml}
+            </div>
+
+            <!-- Message Action Hover Button -->
+            <div class="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity">
+              <button onclick="deleteThisMessage('${msg.id}')" title="Delete for Everyone" class="p-1 rounded bg-black/10 dark:hover:bg-white/10 text-[var(--text-secondary)] hover:text-red-500">
+                <i class="ph-bold ph-trash text-xs"></i>
+              </button>
+            </div>
+          </div>
+        `;
+        area.appendChild(msgDiv);
+      });
+
+      // Auto scroll to bottom
+      area.scrollTop = area.scrollHeight;
+    }
+
+    function escapeHtml(string) {
+      const div = document.createElement('div');
+      div.innerText = string;
+      return div.innerHTML;
+    }
+
+    // ==========================================
+    // 4. INTERACTIVE MESSAGING & GB ANTI-DELETE
+    // ==========================================
+
+    function handleSendMessage() {
+      const input = document.getElementById('messageInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      const newMsg = {
+        id: 'msg_' + Date.now(),
+        sender: 'me',
+        text: text,
+        time: timeStr,
+        status: gbSettings.blueTickAfterReply ? 'delivered' : 'read',
+        isDeleted: false
+      };
+
+      if (!messages[activeChatId]) messages[activeChatId] = [];
+      messages[activeChatId].push(newMsg);
+      input.value = '';
+
+      saveState();
+      renderMessages();
+      renderChatsList();
+
+      // Trigger automatic reply after 1.5 seconds if talking to single contacts
+      setTimeout(() => {
+        simulateAutoContactReply(activeChatId);
+      }, 1400);
+    }
+
+    function handleInputKeyDown(e) {
+      if (e.key === 'Enter') {
+        handleSendMessage();
+      }
+    }
+
+    function triggerSimulatedSenderMessage() {
+      const contact = contacts.find(c => c.id === activeChatId);
+      if (!contact) return;
+
+      const automatedSamples = [
+        "Hey! How is everything going today?",
+        "Did you test the new custom themes in this app?",
+        "I am sending this from my Chrome browser!",
+        "Check this out: you can download this app to home screen on mobile!",
+        "GB WhatsApp look is super clean here!"
+      ];
+      const randomText = automatedSamples[Math.floor(Math.random() * automatedSamples.length)];
+      
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      const incomingMsg = {
+        id: 'sim_' + Date.now(),
+        sender: activeChatId,
+        text: randomText,
+        time: timeStr,
+        status: 'read',
+        isDeleted: false
+      };
+
+      if (!messages[activeChatId]) messages[activeChatId] = [];
+      messages[activeChatId].push(incomingMsg);
+      saveState();
+      renderMessages();
+      renderChatsList();
+    }
+
+    function triggerSenderDeleteLastMessage() {
+      const chatMsgs = messages[activeChatId] || [];
+      const senderMsgs = chatMsgs.filter(m => m.sender === activeChatId && !m.isDeleted);
+      
+      if (senderMsgs.length === 0) {
+        alert("Simulate a message from sender first, then click Test Anti-Delete!");
+        return;
+      }
+
+      const target = senderMsgs[senderMsgs.length - 1];
+      target.isDeleted = true;
+      target.deletedBy = contacts.find(c => c.id === activeChatId)?.name || 'Sender';
+      
+      saveState();
+      renderMessages();
+      renderChatsList();
+    }
+
+    function deleteThisMessage(msgId) {
+      const chatMsgs = messages[activeChatId] || [];
+      const target = chatMsgs.find(m => m.id === msgId);
+      if (target) {
+        target.isDeleted = true;
+        saveState();
+        renderMessages();
+        renderChatsList();
+      }
+    }
+
+    function simulateAutoContactReply(chatId) {
+      const contact = contacts.find(c => c.id === chatId);
+      if (!contact) return;
+
+      // Show typing indicator if not suppressed
+      contact.typing = true;
+      updateActiveContactSubtitle(contact);
+
+      setTimeout(() => {
+        contact.typing = false;
+        updateActiveContactSubtitle(contact);
+
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        const replies = [
+          "Got it! That looks super awesome 👌",
+          "Yes, works smoothly on mobile Chrome too!",
+          "That theme combination is fire 🔥",
+          "Awesome feature set! 🚀"
+        ];
+        const randomReply = replies[Math.floor(Math.random() * replies.length)];
+
+        if (!messages[chatId]) messages[chatId] = [];
+        messages[chatId].push({
+          id: 'sim_reply_' + Date.now(),
+          sender: chatId,
+          text: randomReply,
+          time: timeStr,
+          status: 'read',
+          isDeleted: false
+        });
+
+        // If user replied, turn previous user messages blue tick
+        if (messages[chatId]) {
+          messages[chatId].forEach(m => {
+            if (m.sender === 'me') m.status = 'read';
+          });
+        }
+
+        saveState();
+        renderMessages();
+        renderChatsList();
+      }, 1500);
+    }
+
+    // Mock attachments
+    function sendMockImage() {
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      messages[activeChatId].push({
+        id: 'msg_img_' + Date.now(),
+        sender: 'me',
+        text: '📷 Photo: [sunset_view_hd.jpg]',
+        time: timeStr,
+        status: 'delivered',
+        isDeleted: false
+      });
+      saveState();
+      renderMessages();
+    }
+
+    function sendMockDocument() {
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      messages[activeChatId].push({
+        id: 'msg_doc_' + Date.now(),
+        sender: 'me',
+        text: '📄 Document: GB_Privacy_Config.pdf (1.8 MB)',
+        time: timeStr,
+        status: 'delivered',
+        isDeleted: false
+      });
+      saveState();
+      renderMessages();
+    }
+
+    function sendMockVoice() {
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      messages[activeChatId].push({
+        id: 'msg_v_' + Date.now(),
+        sender: 'me',
+        text: '🎤 Voice Note (0:14) ▶ ılılılllıılıl',
+        time: timeStr,
+        status: 'delivered',
+        isDeleted: false
+      });
+      saveState();
+      renderMessages();
+    }
+
+    // ==========================================
+    // 5. GB MOD PRIVACY TOGGLES & STATUS LOGIC
+    // ==========================================
+
+    function openGbModal() {
+      document.getElementById('gbAntiDeleteToggle').checked = gbSettings.antiDelete;
+      document.getElementById('gbFreezeLastSeenToggle').checked = gbSettings.freezeLastSeen;
+      document.getElementById('gbGhostModeToggle').checked = gbSettings.ghostMode;
+      document.getElementById('gbHideTypingToggle').checked = gbSettings.hideTyping;
+      document.getElementById('gbBlueTickReplyToggle').checked = gbSettings.blueTickAfterReply;
+      document.getElementById('gbAntiDeleteStatusToggle').checked = gbSettings.antiDeleteStatus;
+
+      document.getElementById('gbModal').classList.remove('hidden');
+    }
+
+    function closeGbModal() {
+      document.getElementById('gbModal').classList.add('hidden');
+      updateGbBadges();
+      renderMessages();
+    }
+
+    function toggleGbSetting(key, val) {
+      gbSettings[key] = val;
+      saveState();
+      updateGbBadges();
+    }
+
+    function updateGbBadges() {
+      const ghostBadge = document.getElementById('ghostBadge');
+      const freezeBadge = document.getElementById('freezeBadge');
+      const selfStatus = document.getElementById('selfStatusText');
+      const myIndicator = document.getElementById('myStatusIndicator');
+
+      if (gbSettings.ghostMode) {
+        ghostBadge.classList.remove('hidden');
+        selfStatus.innerText = 'Ghost Mode Active (Appear Offline)';
+        myIndicator.className = 'absolute bottom-0 right-0 w-3 h-3 bg-gray-500 rounded-full border-2 border-[var(--sidebar-header)]';
+      } else {
+        ghostBadge.classList.add('hidden');
+        selfStatus.innerText = 'Online (Normal)';
+        myIndicator.className = 'absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[var(--sidebar-header)]';
+      }
+
+      if (gbSettings.freezeLastSeen) {
+        freezeBadge.classList.remove('hidden');
+      } else {
+        freezeBadge.classList.add('hidden');
+      }
+    }
+
+    // ==========================================
+    // 6. THEMES & COLOR ENGINE
+    // ==========================================
+
+    function openThemeModal() {
+      document.getElementById('themeModal').classList.remove('hidden');
+    }
+
+    function closeThemeModal() {
+      document.getElementById('themeModal').classList.add('hidden');
+    }
+
+    function applyPresetTheme(themeName) {
+      currentTheme = themeName;
+      document.documentElement.setAttribute('data-theme', themeName);
+      localStorage.setItem('wa_gb_theme', themeName);
+    }
+
+    function updateAccentColor(hex) {
+      document.documentElement.style.setProperty('--accent', hex);
+      document.documentElement.style.setProperty('--accent-hover', hex);
+      document.getElementById('accentHexCode').innerText = hex;
+      localStorage.setItem('wa_gb_custom_accent', hex);
+    }
+
+    function resetAccentColor() {
+      document.documentElement.style.removeProperty('--accent');
+      document.documentElement.style.removeProperty('--accent-hover');
+      document.getElementById('accentHexCode').innerText = '#00a884';
+      localStorage.removeItem('wa_gb_custom_accent');
+    }
+
+    function updateBubbleRadius(px) {
+      document.documentElement.style.setProperty('--bubble-radius', px + 'px');
+      document.getElementById('radiusValDisplay').innerText = px + 'px';
+      localStorage.setItem('wa_gb_radius', px);
+    }
+
+    function setWallpaperPattern(type) {
+      if (type === 'dots') {
+        document.documentElement.style.setProperty('--chat-pattern-opacity', '0.08');
+      } else if (type === 'solid') {
+        document.documentElement.style.setProperty('--chat-pattern-opacity', '0.0');
+      } else if (type === 'gradient') {
+        document.documentElement.style.setProperty('--chat-pattern-opacity', '0.15');
+      }
+    }
+
+    // ==========================================
+    // 7. STATUS STORIES (ANTI-DELETE SIMULATOR)
+    // ==========================================
+
+    function openStatusModal() {
+      renderStatusStories();
+      document.getElementById('statusModal').classList.remove('hidden');
+    }
+
+    function closeStatusModal() {
+      document.getElementById('statusModal').classList.add('hidden');
+    }
+
+    function renderStatusStories() {
+      const container = document.getElementById('statusStoriesList');
+      container.innerHTML = '';
+
+      STATUS_STORIES.forEach(story => {
+        // If anti-delete status is off, hide deleted statuses
+        if (story.isDeleted && !gbSettings.antiDeleteStatus) return;
+
+        const storyCard = document.createElement('div');
+        storyCard.className = 'p-3 rounded-xl bg-[var(--sidebar-header)] border border-[var(--border-color)] flex items-start gap-3';
+        storyCard.innerHTML = `
+          <img src="${story.avatar}" class="w-11 h-11 rounded-full object-cover border-2 border-[var(--accent)]" alt="${story.userName}">
+          <div class="flex-1">
+            <div class="flex items-center justify-between">
+              <h4 class="font-bold text-xs text-[var(--text-primary)]">${story.userName}</h4>
+              <span class="text-[10px] text-[var(--text-secondary)]">${story.time}</span>
+            </div>
+            ${story.isDeleted ? `
+              <div class="inline-flex items-center gap-1 text-[10px] text-red-500 font-bold bg-red-500/10 px-1.5 py-0.5 rounded my-1">
+                <i class="ph-bold ph-prohibit"></i> Anti-Delete Saved Story
+              </div>
+            ` : ''}
+            <p class="text-xs text-[var(--text-primary)] mt-1">${escapeHtml(story.text)}</p>
+          </div>
+        `;
+        container.appendChild(storyCard);
+      });
+    }
+
+    function postNewStatus() {
+      const input = document.getElementById('myNewStatusInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      STATUS_STORIES.unshift({
+        id: 's_' + Date.now(),
+        userName: 'My Status (You)',
+        avatar: document.getElementById('myAvatar').src,
+        time: 'Just now',
+        text: text,
+        isDeleted: false
+      });
+
+      input.value = '';
+      renderStatusStories();
+    }
+
+    // ==========================================
+    // 8. EMOJI TRAY & IN-CHAT SEARCH
+    // ==========================================
+
+    const POPULAR_EMOJIS = ['😀', '😂', '🔥', '❤️', '👍', '🙏', '😍', '😎', '🎉', '💯', '🚀', '✨', '⚡', '☕', '💻', '🤝', '🙌', '⭐', '🎈', '🤩'];
+
+    function initEmojiTray() {
+      const tray = document.getElementById('emojiTray');
+      tray.innerHTML = '';
+      POPULAR_EMOJIS.forEach(emoji => {
+        const btn = document.createElement('button');
+        btn.className = 'p-2 rounded-lg hover:bg-black/10 dark:hover:bg-white/10 transition';
+        btn.innerText = emoji;
+        btn.onclick = () => {
+          document.getElementById('messageInput').value += emoji;
+        };
+        tray.appendChild(btn);
+      });
+    }
+
+    function toggleEmojiTray() {
+      const tray = document.getElementById('emojiTray');
+      tray.classList.toggle('hidden');
+    }
+
+    function toggleAttachmentMenu() {
+      const menu = document.getElementById('attachmentMenu');
+      menu.classList.toggle('hidden');
+    }
+
+    function filterChats() {
+      const q = document.getElementById('searchInput').value;
+      const clearBtn = document.getElementById('clearSearchBtn');
+      if (q) {
+        clearBtn.classList.remove('hidden');
+      } else {
+        clearBtn.classList.add('hidden');
+      }
+      renderChatsList(q);
+    }
+
+    function clearSearch() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('clearSearchBtn').classList.add('hidden');
+      renderChatsList();
+    }
+
+    function toggleInChatSearch() {
+      const bar = document.getElementById('inChatSearchBar');
+      bar.classList.toggle('hidden');
+      if (!bar.classList.contains('hidden')) {
+        document.getElementById('inChatSearchInput').focus();
+      }
+    }
+
+    function searchWithinChat() {
+      const q = document.getElementById('inChatSearchInput').value.toLowerCase();
+      const countEl = document.getElementById('searchResultCount');
+      if (!q) {
+        countEl.innerText = '';
+        renderMessages();
+        return;
+      }
+
+      const chatMsgs = messages[activeChatId] || [];
+      const matches = chatMsgs.filter(m => m.text.toLowerCase().includes(q));
+      countEl.innerText = `${matches.length} found`;
+    }
+
+    // ==========================================
+    // 9. WINDOW ONLOAD BOOTSTRAPPER
+    // ==========================================
+    window.onload = function () {
+      setupPwaManifest();
+
+      // Apply cached theme
+      if (currentTheme) {
+        applyPresetTheme(currentTheme);
+      }
+
+      const customAccent = localStorage.getItem('wa_gb_custom_accent');
+      if (customAccent) {
+        updateAccentColor(customAccent);
+      }
+
+      const savedRadius = localStorage.getItem('wa_gb_radius');
+      if (savedRadius) {
+        updateBubbleRadius(savedRadius);
+      }
+
+      initEmojiTray();
+      renderChatsList();
+      selectChat('contact_1');
+      updateGbBadges();
+    };
+
+    // Responsive window resize handle
+    window.addEventListener('resize', () => {
+      const sidebar = document.getElementById('sidebarSection');
+      const chatMain = document.getElementById('chatMainSection');
+      if (window.innerWidth >= 768) {
+        sidebar.classList.remove('hidden');
+        chatMain.classList.remove('hidden');
+      }
+    });
+  </script>
+</body>
+</html>
